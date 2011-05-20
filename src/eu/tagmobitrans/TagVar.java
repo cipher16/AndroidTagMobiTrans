@@ -175,7 +175,7 @@ public class TagVar {
 			        map = new HashMap<String, String>();
 			        map.put("nom", ((TagNode) o).getElementsByName("a", false)[0].getText()+
 			        		" Ligne : "+((TagNode) o).getElementsByName("span", false)[1].getText());
-			        map.put("heure", "2min");
+			        map.put("heure", getHoraire(tag.URL+((TagNode) o).getElementsByName("a", false)[0].getAttributeByName("href")));
 			        listItem.add(map);
 				}
 			}
@@ -184,5 +184,37 @@ public class TagVar {
         	displayToast("[ParsePostArret]Exception "+e.getMessage());
         }
         return listItem;
+	}
+	
+	synchronized public String getHoraire(String url)
+	{
+		String horaire="";
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpUriRequest getRequest = new HttpGet(url);
+		getRequest.setHeader("User-Agent",  UA);
+		getRequest.setHeader("Accept-Charset","iso-8859-15");
+		try {
+			HttpResponse response = client.execute(getRequest);
+			int statusCode = response.getStatusLine().getStatusCode();
+			if(statusCode==200)
+			{
+				HttpEntity entity = response.getEntity();
+				HtmlCleaner hc = new HtmlCleaner();
+				TagNode tn = hc.clean(entity.getContent());
+				
+				Pattern p = Pattern.compile("(Prochain[^<\n\t]*|Vers[^<\n\t]*)",Pattern.MULTILINE);
+				Matcher m;
+				for (Object o : tn.evaluateXPath("//div[@class='corpsL']")) {
+					m=p.matcher(((TagNode)o).getText().toString());
+					while(m.find())
+					{
+						horaire+= m.group(1)+ "\n";
+					}
+				}
+			}
+		} catch (Exception e) {
+			displayToast("[getHoraire]Exception "+e.getMessage());
+		}
+		return (horaire.length()==0?"Aucun horaire n'a pu être trouvé":horaire);
 	}
 }

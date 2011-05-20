@@ -7,4 +7,5 @@
     <EditText android:text="Arret" android:id="@+id/arret" android:layout_height="wrap_content" android:layout_width="fill_parent"></EditText>
     <Button android:text="Rechercher" android:id="@+id/rechercher" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
     <TextView android:text="Information" android:id="@+id/information" android:layout_width="fill_parent" android:layout_height="wrap_content"></TextView>
+    <ListView android:layout_height="wrap_content" android:id="@+id/afficher_donnee" android:layout_width="match_parent"></ListView>
 </LinearLayout>

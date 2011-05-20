@@ -19,6 +19,8 @@ import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
 
 import android.app.Activity;
+import android.text.Html;
+import android.text.Spanned;
 import android.widget.Toast;
 
 public class TagVar {
@@ -208,6 +210,10 @@ public class TagVar {
 					m=p.matcher(((TagNode)o).getText().toString());
 					while(m.find())
 					{
+						if(m.group(1).startsWith("Vers"))
+							horaire+="\n";
+						else
+							horaire+="\t";
 						horaire+= m.group(1)+ "\n";
 					}
 				}

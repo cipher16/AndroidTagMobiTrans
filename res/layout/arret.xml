@@ -10,11 +10,11 @@
 	    	android:layout_height="wrap_content"
 	    	android:textStyle="bold"
 	    	 android:textScaleX="1.2" />
-	    <TextView 
+	    <TextView
 	    	android:id="@+id/heure"
 	    	android:layout_width="fill_parent"
 	    	android:layout_height="wrap_content"
 	    	android:textStyle="italic"
 	    	android:paddingLeft="10px"
-	    	android:textSize="10px" />
+	    	android:textScaleX="0.9" />
 </LinearLayout>
